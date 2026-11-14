@@ -17,6 +17,7 @@ addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',fit
 
 // ---------- smooth in-page links (account for the sticky header)
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  if(a.closest('#m'))return; // mobile layout uses native smooth scrolling (see css/mobile.css)
   const id=a.getAttribute('href').slice(1);if(!id)return;const el=document.getElementById(id);if(!el)return;
   e.preventDefault();
   const top=(parseFloat(el.style.top)-(id==='home'?0:HDR))*k;
@@ -39,14 +40,14 @@ document.querySelectorAll('.cnt').forEach(el=>{el.textContent='0'+el.dataset.suf
 
 // ---------- services carousel: 4 cards, dots, swipe/drag, autoplay
 const row=document.getElementById('cards'),dots=[...document.querySelectorAll('.cdot')],STEP=1079,N=4;
-let idx=0,timer;
+let idx=0,timer,vis=false;
 // dot geometry from the design: active 19px, others 13px
 function layoutDots(){
   let x=0;dots.forEach((d,i)=>{const a=i===idx,s=a?19:13;
     Object.assign(d.style,{left:x+'px',top:(a?4.9:7.9)+'px',width:s+'px',height:s+'px',background:a?'#00df82':'rgba(0,223,130,.4)'});
     d.classList.toggle('on',a);x+=s+(a||i+1===idx?11.9:8)})}
 function go(i){idx=(i+N)%N;row.style.transform=`translateX(${-STEP*idx}px)`;layoutDots();restart()}
-function restart(){clearInterval(timer);if(!reduce)timer=setInterval(()=>go(idx+1),5000)}
+function restart(){clearInterval(timer);if(!reduce&&vis)timer=setInterval(()=>go(idx+1),5000)}
 dots.forEach((d,i)=>{d.addEventListener('click',()=>go(i));d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(i)}})});
 document.getElementById('services-wrap')?.addEventListener('mouseenter',()=>clearInterval(timer));
 row.parentElement.addEventListener('mouseenter',()=>clearInterval(timer));
@@ -58,3 +59,9 @@ const end=()=>{if(!drag)return;drag=false;row.classList.remove('drag');if(dx<-12
 row.addEventListener('pointerup',end);row.addEventListener('pointercancel',end);
 row.addEventListener('click',e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
 go(0);
+// start on the first card (Web Development) every time the carousel scrolls into view; only autoplay while visible
+new IntersectionObserver(es=>{
+  vis=es[0].isIntersecting;
+  if(vis){restart()}
+  else{clearInterval(timer);row.style.transition='none';idx=0;row.style.transform='translateX(0)';layoutDots();void row.offsetWidth;row.style.transition=''}
+},{threshold:.2}).observe(row.parentElement);
