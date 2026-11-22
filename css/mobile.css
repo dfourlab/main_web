@@ -65,7 +65,7 @@
 
   /* ---------- hero ---------- */
   .m-hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#010102}
-  .m-hero-bg{position:absolute;inset:0 -4%;background:url(../assets/9941b419.webp) center/cover no-repeat;animation:kb 3s cubic-bezier(.2,.7,.2,1) both}
+  .m-hero-bg{position:absolute;inset:0 -4%;background:url(../assets/hero-bg.webp) center/cover no-repeat;animation:kb 3s cubic-bezier(.2,.7,.2,1) both}
   .m-hero::before{content:"";position:absolute;inset:0 0 auto 0;height:220px;z-index:1;background:linear-gradient(180deg,#010102,rgba(1,1,2,0))}
   .m-plate{position:relative;z-index:2;background:#010102;border-radius:0;padding:34px 20px 40px}
   .m-plate>div{max-width:560px;margin-inline:auto}
@@ -183,4 +183,13 @@
   .m-row{animation:none}
   .m-marq{overflow-x:auto}
   .js .m-rv{opacity:1!important;transform:none!important}
+}
+
+/* ---- service cards: feature chips (replaces the description) ---- */
+@media (max-width:900px){
+  .m-svc .m-feat{position:relative;display:grid;gap:6px;margin:16px 0 0;padding:0;list-style:none}
+  .m-svc .m-feat li{background:#00df82;color:#010102;font:500 14.5px/1.3 'Poppins',sans-serif;padding:10px 14px;border-radius:3px}
+  .m-svc .m-arr{top:18px;bottom:auto}
+  .m-svc h3{padding-right:62px}
+  .m-svc{height:min(128vw,560px)}
 }
