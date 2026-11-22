@@ -47,7 +47,7 @@ function layoutDots(){
     Object.assign(d.style,{left:x+'px',top:(a?4.9:7.9)+'px',width:s+'px',height:s+'px',background:a?'#00df82':'rgba(0,223,130,.4)'});
     d.classList.toggle('on',a);x+=s+(a||i+1===idx?11.9:8)});const cd=document.getElementById('cdots');cd.style.left=(960-(x-8)/2)+'px'}
 function go(i){idx=(i+N)%N;row.style.transform=`translateX(${-STEP*idx}px)`;layoutDots();restart()}
-function restart(){clearInterval(timer);if(!reduce&&vis)timer=setInterval(()=>go(idx+1),5000)}
+function restart(){clearInterval(timer);if(!reduce&&vis)timer=setInterval(()=>go(idx+1),2000)}
 dots.forEach((d,i)=>{d.addEventListener('click',()=>go(i));d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(i)}})});
 document.getElementById('services-wrap')?.addEventListener('mouseenter',()=>clearInterval(timer));
 row.parentElement.addEventListener('mouseenter',()=>clearInterval(timer));
