@@ -1,0 +1,29 @@
+# Enforce HTTPS and HSTS
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# Content Security Policy – basic protection (adjust as needed)
+<IfModule mod_headers.c>
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+</IfModule>
+
+# Prevent MIME type sniffing
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Clickjacking protection – deny framing
+<IfModule mod_headers.c>
+  Header set X-Frame-Options "DENY"
+</IfModule>
+
+# Referrer policy
+<IfModule mod_headers.c>
+  Header set Referrer-Policy "no-referrer-when-downgrade"
+</IfModule>
+
+# Permissions policy – block powerful features unless explicitly needed
+<IfModule mod_headers.c>
+  Header set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), fullscreen=()"
+</IfModule>
