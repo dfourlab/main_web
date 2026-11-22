@@ -109,21 +109,131 @@
   .m-step p{font:400 16px/1.6 'Instrument Sans',sans-serif;color:#d2d2d2;margin:12px 8px 0}
 
   /* ---------- services carousel ---------- */
-  .m-services{background:#010102;padding:84px 0 70px}
+  .m-services{background:#010102;padding:84px 0 80px}
   .m-services .m-h2{margin-bottom:0}
-  .m-services .intro{font:600 16px/1.65 'Urbanist',sans-serif;color:#e4e4e4;margin-top:20px;margin-bottom:34px}
-  .m-car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 20px 6px;scroll-padding-inline:20px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .m-services .intro{font:500 16px/1.7 'Poppins',sans-serif;color:#a0a0a0;margin-top:18px;margin-bottom:38px}
+
+  /* scrollable container */
+  .m-car{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:0 20px 10px;scroll-padding-inline:20px;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
   .m-car::-webkit-scrollbar{display:none}
-  .m-svc{position:relative;flex:0 0 min(84%,420px);height:min(122vw,540px);scroll-snap-align:start;border-radius:8px;overflow:hidden;background:#121614 center/cover no-repeat;display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
-  .m-svc::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,1,2,.15) 0%,rgba(1,1,2,0) 30%,rgba(1,1,2,.94) 100%)}
-  .m-svc>*{position:relative}
-  .m-svc h3{font:600 clamp(30px,9vw,40px)/1.04 'Urbanist',sans-serif;letter-spacing:-.01em}
-  .m-svc p{font:500 15.5px/1.5 'Urbanist',sans-serif;color:#dcdcdc;margin-top:12px;padding-right:58px}
-  .m-svc .m-arr{position:absolute;right:18px;bottom:20px;background:rgba(1,1,2,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-  .m-dots{display:flex;align-items:center;gap:8px;padding:22px 20px 0;max-width:680px;margin-inline:auto}
-  .m-dots button{width:9px;height:9px;border:0;padding:0;border-radius:6px;background:rgba(0,223,130,.4);cursor:pointer;position:relative;transition:width .35s cubic-bezier(.2,.7,.2,1),background .25s}
-  .m-dots button::after{content:"";position:absolute;inset:-14px -4px}
-  .m-dots button.on{width:30px;background:#00df82}
+
+  /* each service card */
+  .m-svc{
+    position:relative;
+    flex:0 0 min(86%,400px);
+    height:min(130vw,560px);
+    scroll-snap-align:start;
+    border-radius:20px;
+    overflow:hidden;
+    background:#121614 center/cover no-repeat;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.55);
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
+    border:1px solid rgba(255,255,255,.07);
+  }
+  .m-svc:active{transform:scale(.975);box-shadow:0 10px 30px rgba(0,0,0,.55)}
+
+  /* multi-stop gradient overlay — dark top + dark bottom */
+  .m-svc::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg,
+        rgba(1,1,2,.55) 0%,
+        rgba(1,1,2,0)   35%,
+        rgba(1,1,2,0)   55%,
+        rgba(1,1,2,.98) 100%);
+  }
+
+  /* green accent top-bar */
+  .m-svc::after{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:3px;
+    background:linear-gradient(90deg,#00df82,rgba(0,223,130,0));
+    border-radius:20px 20px 0 0;
+  }
+
+  .m-svc>*{position:relative;z-index:1}
+
+  /* card number badge */
+  .m-svc .svc-num{
+    position:absolute;top:22px;left:24px;z-index:1;
+    font:700 13px/1 'Roboto Mono',monospace;
+    color:#00df82;
+    letter-spacing:.08em;
+    background:rgba(0,223,130,.12);
+    border:1px solid rgba(0,223,130,.3);
+    padding:6px 10px;
+    border-radius:4px;
+  }
+
+  /* arrow button — top right */
+  .m-svc .m-arr{
+    position:absolute;top:18px;right:18px;z-index:1;
+    background:rgba(255,255,255,.1);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-color:rgba(255,255,255,.25);
+    transition:background .25s,transform .25s;
+  }
+  .m-svc .m-arr:active{background:#00df82;border-color:#00df82;color:#010102;transform:rotate(45deg)}
+
+  /* title */
+  .m-svc h3{
+    font:600 clamp(26px,8.4vw,36px)/1.1 'Urbanist',sans-serif;
+    letter-spacing:-.02em;
+    text-shadow:0 2px 16px rgba(0,0,0,.7);
+  }
+
+  /* feature chips grid */
+  .m-svc .m-feat{
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;gap:8px;
+    margin:16px 0 0;padding:0;list-style:none;
+  }
+  .m-svc .m-feat li{
+    display:flex;align-items:center;gap:8px;
+    font:500 13.5px/1.3 'Poppins',sans-serif;
+    color:#e8e8e8;
+    background:rgba(255,255,255,.08);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.12);
+    padding:9px 14px;
+    border-radius:8px;
+    letter-spacing:.01em;
+  }
+  .m-svc .m-feat li::before{
+    content:"";
+    flex:none;
+    width:6px;height:6px;
+    border-radius:50%;
+    background:#00df82;
+    box-shadow:0 0 6px #00df82;
+  }
+
+  /* dot indicators */
+  .m-dots{
+    display:flex;align-items:center;justify-content:center;
+    gap:8px;padding:28px 20px 0;
+  }
+  .m-dots button{
+    width:8px;height:8px;
+    border:0;padding:0;
+    border-radius:8px;
+    background:rgba(0,223,130,.3);
+    cursor:pointer;
+    position:relative;
+    transition:width .4s cubic-bezier(.2,.7,.2,1),background .3s;
+  }
+  .m-dots button::after{content:"";position:absolute;inset:-14px -6px}
+  .m-dots button.on{width:28px;background:#00df82;box-shadow:0 0 10px rgba(0,223,130,.6)}
 
   /* ---------- clients: two marquees, opposite directions ---------- */
   .m-clients{position:relative;z-index:1;background:#010102;padding:24px 0 clamp(80px,22vw,120px)}
@@ -185,11 +295,7 @@
   .js .m-rv{opacity:1!important;transform:none!important}
 }
 
-/* ---- service cards: feature chips (replaces the description) ---- */
-@media (max-width:900px){
-  .m-svc .m-feat{position:relative;display:grid;gap:6px;margin:16px 0 0;padding:0;list-style:none}
-  .m-svc .m-feat li{background:#00df82;color:#010102;font:500 14.5px/1.3 'Poppins',sans-serif;padding:10px 14px;border-radius:3px}
-  .m-svc .m-arr{top:18px;bottom:auto}
-  .m-svc h3{padding-right:62px}
-  .m-svc{height:min(128vw,560px)}
+/* ---- wider phone tweaks for service cards ---- */
+@media (min-width:600px) and (max-width:900px){
+  .m-svc{flex-basis:min(62%,440px);height:min(100vw,520px)}
 }
